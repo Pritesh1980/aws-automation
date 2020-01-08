@@ -1,2 +1,3 @@
 # aws-automation
-Experiments in using Terraform and CloudFormation for setting up simple AWS services
+Sample scripts for  Terraform and CloudFormation to set up simple AWS services and small apps.
+Intended for learning only!
