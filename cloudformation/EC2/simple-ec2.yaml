@@ -1,0 +1,11 @@
+Resources:
+  Ec2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.nano
+      ImageId: ami-06ce3edf0cff21f07 # Amazon Linux 2 AMI in Ireland
+      Tags:
+        - Key: Name
+          Value: "CF Generated simple EC2"
+        - Key: Project
+          Value: "CF"
