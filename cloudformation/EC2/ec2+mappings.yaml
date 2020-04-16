@@ -1,0 +1,35 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: A simple EC2 using mappings to get the AMI 
+
+
+Mappings:
+  RegionMap:
+    eu-west-1:
+      AMI: ami-06ce3edf0cff21f07 # Amazon Linux 2 AMI in Ireland
+    eu-west-2:
+      AMI: ami-01a6e31ac994bbc09 # Amazon Linux 2 AMI in London
+
+
+Resources:
+  Ec2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: t2.nano
+      ImageId: 
+        Fn::FindInMap:
+        - RegionMap
+        - !Ref AWS::Region 
+        - AMI 
+      Tags:
+        - Key: Name
+          Value: "CF Generated simple EC2"
+        - Key: Project
+          Value: "CF"
+        - Key: "GeneratedDescription"
+          Value: !Join 
+            - ""
+            - - "EC2 Instance for "
+              - !Ref AWS::Region
+              - " for Account: "
+              - !Ref AWS::AccountId
+              
