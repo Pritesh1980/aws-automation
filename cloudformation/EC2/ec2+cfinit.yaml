@@ -1,0 +1,86 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: EC2 instance with simple cfinit section to install Apache
+
+Parameters:
+  KeyName:
+    Description: Name of existing keypair to allow access to the EC2 instance
+    Type: AWS::EC2::KeyPair::KeyName 
+  InstType:
+    Description: Instance type to use, default to t2.nano 
+    Type: String
+    Default: t2.nano
+    AllowedValues:
+      - t2.nano
+      - t2.micro
+      - t3.nano
+      - t3.micro
+
+Resources:
+  Ec2Instance:
+    Type: AWS::EC2::Instance
+    Metadata: 
+      AWS::CloudFormation::Init:
+        config: 
+          packages: 
+            yum:
+              httpd: []
+              php: []
+          files: 
+            /var/www/html/index.php:
+              content: |
+                <?php print "Hello world PM was here!"; ?>
+          services: 
+            sysvinit:
+              httpd:
+                enabled: true
+                ensureRunning: true
+    Properties:
+      InstanceType:
+        Ref:
+          InstType 
+      ImageId: ami-06ce3edf0cff21f07 # Amazon Linux 2 AMI in Ireland
+      UserData:
+        'Fn::Base64': 
+          !Sub |
+            #!/bin/bash -xe            
+            # Ensure AWS CFN Bootstrap is the latest
+            yum update -y 
+            yum install -y aws-cfn-bootstrap
+            # Install the files and packages from the metadata
+            /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource Ec2Instance  --region ${AWS::Region}
+      SecurityGroups:
+        - !Ref MySecurityGroup
+      KeyName: !Ref KeyName
+      Tags:
+        - Key: Name
+          Value: !Join 
+            - ""
+            - - "EC2 Instance for "
+              - !Ref AWS::Region
+              - " for Account: "
+              - !Ref AWS::AccountId
+        - Key: Project
+          Value: "CF"
+
+  MySecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: Enable Web access
+      SecurityGroupIngress:
+      - IpProtocol: tcp
+        FromPort: '80'
+        ToPort: '80'
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: '443'
+        ToPort: '443'
+        CidrIp: 0.0.0.0/0
+      - IpProtocol: tcp
+        FromPort: '22'
+        ToPort: '22'
+        CidrIp: 0.0.0.0/0
+
+Outputs:
+  Website:
+    Description: The Public DNS for the EC2 Instance
+    Value: !Sub 'http://${Ec2Instance.PublicDnsName}'
