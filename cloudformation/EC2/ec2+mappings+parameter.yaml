@@ -1,0 +1,52 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: A simple EC2 using mappings to get the AMI and parameters to specify Instance Type and key
+
+
+Parameters:
+  KeyName:
+    Description: Name of existing keypair to allow access to the EC2 instance
+    Type: AWS::EC2::KeyPair::KeyName 
+  InstType:
+    Description: Instance type to use, default to t2.nano 
+    Type: String
+    Default: t2.nano
+    AllowedValues:
+      - t2.nano
+      - t2.micro
+      - t3.nano
+      - t3.micro
+
+Mappings:
+  RegionMap:
+    eu-west-1:
+      AMI: ami-06ce3edf0cff21f07 # Amazon Linux 2 AMI in Ireland
+    eu-west-2:
+      AMI: ami-01a6e31ac994bbc09 # Amazon Linux 2 AMI in London
+
+
+Resources:
+  Ec2Instance:
+    Type: AWS::EC2::Instance
+    Properties:
+      InstanceType: 
+        Ref:
+          InstType 
+      ImageId: 
+        Fn::FindInMap:
+        - RegionMap
+        - !Ref AWS::Region 
+        - AMI 
+      KeyName: !Ref KeyName
+      Tags:
+        - Key: Name
+          Value: "CF Generated simple EC2"
+        - Key: Project
+          Value: "CF"
+        - Key: "GeneratedDescription"
+          Value: !Join 
+            - ""
+            - - "EC2 Instance for "
+              - !Ref AWS::Region
+              - " for Account: "
+              - !Ref AWS::AccountId
+              
