@@ -1,0 +1,26 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: Create IAM role that has full access to S3 
+
+Resources:
+  S3IamRole:
+    Type: "AWS::IAM::Role"
+    Properties:
+      ManagedPolicyArns: 
+        - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
+      AssumeRolePolicyDocument: 
+        Version: "2012-10-17"
+        Statement: 
+          - 
+            Effect: "Allow"
+            Principal: 
+              Service: 
+                - "apigateway.amazonaws.com"
+            Action: 
+              - "sts:AssumeRole"
+      Path: "/"
+
+Outputs:
+  RoleArn:
+    Value: !GetAtt
+      - S3IamRole
+      - Arn
