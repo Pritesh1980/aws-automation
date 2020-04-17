@@ -1,0 +1,50 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: ApiGateway to read/write data from S3 
+
+Parameters:
+  S3BucketName:
+    Description: Name of bucket to store files in 
+    Type: String
+  ApiName:
+    Type: String
+
+
+Resources:
+  DestS3Bucket:
+    Type: AWS::S3::Bucket 
+    Properties:
+      BucketName: !Ref S3BucketName 
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+      LoggingConfiguration:
+        DestinationBucketName: !Ref 'LoggingBucket'
+        LogFilePrefix: s3-logs
+  
+  LoggingBucket:
+    Type: AWS::S3::Bucket
+    Properties:
+      AccessControl: LogDeliveryWrite
+      BucketEncryption:
+        ServerSideEncryptionConfiguration:
+          - ServerSideEncryptionByDefault:
+              SSEAlgorithm: AES256
+
+  MyRestApi:
+    Type: AWS::ApiGateway::RestApi
+    Properties:
+      Name: !Ref ApiName
+      EndpointConfiguration:
+        Types:
+          - REGIONAL
+
+
+
+Outputs:
+  S3Bucket:
+    Description: The target S3 bucket
+    Value: !Ref DestS3Bucket 
+  LoggingBucket:
+    Description: The S3 logging bucket
+    Value: !Ref LoggingBucket 
