@@ -1,0 +1,157 @@
+AWSTemplateFormatVersion: 2010-09-09
+Description: EC2 instances behind an ALB 
+
+Parameters:
+  MyKeyName:
+    Description: Name of existing keypair to allow access to the EC2 instance
+    Type: AWS::EC2::KeyPair::KeyName 
+  InstType:
+    Description: Instance type to use, default to t2.nano 
+    Type: String
+    Default: t2.nano
+    AllowedValues:
+      - t2.nano
+      - t2.micro
+      - t3.nano
+      - t3.micro
+  VpcId:
+    Description: Enter the VpcId
+    Type: AWS::EC2::VPC::Id
+  SubnetIds:
+    Description: Enter the Subnets
+    Type: List<AWS::EC2::Subnet::Id>
+  ScalingGroupMin:
+    Description: Min number of instances
+    Type: Number
+  ScalingGroupMax:
+    Description: Max number of instances
+    Type: Number 
+
+Mappings:
+  RegionMap:
+    eu-west-1:
+      AMI: ami-06ce3edf0cff21f07 # Amazon Linux 2 AMI in Ireland
+    eu-west-2:
+      AMI: ami-01a6e31ac994bbc09 # Amazon Linux 2 AMI in London
+
+
+
+Resources:
+  LoadBalancer: # Application Load Balancer
+    Type: AWS::ElasticLoadBalancingV2::LoadBalancer
+    Properties:
+      SecurityGroups:
+        - !Ref ALBSecurityGroup
+      Subnets: !Ref SubnetIds
+
+  LoadBalancerListener: # Port 80 Listener for ALB
+    Type: AWS::ElasticLoadBalancingV2::Listener
+    Properties:
+      LoadBalancerArn: !Ref LoadBalancer
+      Port: 80
+      Protocol: HTTP
+      DefaultActions:
+        - Type: forward
+          TargetGroupArn:
+            Ref: TargetGroup
+
+  TargetGroup:
+    Type: AWS::ElasticLoadBalancingV2::TargetGroup
+    Properties:
+      Port: 80
+      Protocol: HTTP
+      VpcId: !Ref VpcId
+
+  AutoScalingGroup:
+    Type: AWS::AutoScaling::AutoScalingGroup
+    Properties:
+      #AvailabilityZones: !GetAZs
+      VPCZoneIdentifier: !Ref SubnetIds  
+      LaunchConfigurationName: !Ref LaunchConfiguration
+      MinSize: 
+        Ref:
+          ScalingGroupMin 
+      MaxSize: 
+        Ref:
+          ScalingGroupMax 
+      TargetGroupARNs: 
+        - !Ref TargetGroup
+
+  
+  LaunchConfiguration:
+    Type: AWS::AutoScaling::LaunchConfiguration
+    Metadata: 
+      AWS::CloudFormation::Init:
+        config: 
+          packages: 
+            yum:
+              httpd: []
+              php: []
+          files: 
+            /var/www/html/index.php:
+              content: |
+                <?php print "Hello world PM was here!"; ?>
+          services: 
+            sysvinit:
+              httpd:
+                enabled: true
+                ensureRunning: true
+    Properties:
+      InstanceType:
+        Ref:
+          InstType 
+      SecurityGroups:
+        - !Ref EC2SecurityGroup
+      ImageId: 
+        Fn::FindInMap:
+        - RegionMap
+        - !Ref AWS::Region 
+        - AMI 
+      UserData:
+        'Fn::Base64': 
+          !Sub |
+            #!/bin/bash -xe            
+            # Ensure AWS CFN Bootstrap is the latest
+            yum install -y aws-cfn-bootstrap
+            # Install the files and packages from the metadata
+            /opt/aws/bin/cfn-init -v --stack ${AWS::StackName} --resource LaunchConfiguration --region ${AWS::Region}
+      KeyName: !Ref MyKeyName
+
+
+
+  ALBSecurityGroup:
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: ALB Security Group
+      VpcId: !Ref VpcId
+      SecurityGroupIngress:
+        - IpProtocol: tcp
+          FromPort: 80
+          ToPort: 80
+          CidrIp: 0.0.0.0/0
+
+  EC2SecurityGroup: 
+    Type: AWS::EC2::SecurityGroup
+    Properties:
+      GroupDescription: EC2 Instance
+      VpcId: !Ref VpcId
+
+  EC2InboundRule: # EC2 can only accept traffic from ALB
+    Type: AWS::EC2::SecurityGroupIngress
+    Properties:
+      IpProtocol: tcp
+      FromPort: 80
+      ToPort: 80
+      SourceSecurityGroupId:
+        !GetAtt
+        - ALBSecurityGroup
+        - GroupId
+      GroupId:
+        !GetAtt
+        - EC2SecurityGroup
+        - GroupId
+
+Outputs:
+  PublicDns:
+    Description: The Public DNS
+    Value: !Sub 'http://${LoadBalancer.DNSName}'
