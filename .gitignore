@@ -116,3 +116,7 @@ terraform/EC2/modules/.terraform/plugins/darwin_amd64/lock.json
 terraform/EC2/modules/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
 terraform/EC2/modules/.terraform/plugins/darwin_amd64/terraform-provider-template_v2.1.2_x4
 terraform/EC2/modules/.terraform/modules/modules.json
+terraform/EC2/multipleEc2/.terraform.tfstate.lock.info
+terraform/EC2/multipleEc2/terraform.tfstate
+terraform/EC2/multipleEc2/.terraform/plugins/darwin_amd64/lock.json
+terraform/EC2/multipleEc2/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
