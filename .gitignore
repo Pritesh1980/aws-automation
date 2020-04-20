@@ -1,0 +1,5 @@
+automation.code-workspace
+terraform/s3/s3-01/.terraform/plugins/darwin_amd64/lock.json
+terraform/s3/s3-01/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.43.0_x4
+terraform/EC2/simple/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
+terraform/EC2/simple/.terraform/plugins/darwin_amd64/lock.json
