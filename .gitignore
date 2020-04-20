@@ -9,3 +9,7 @@ terraform/EC2/simple/terraform.tfstate
 terraform/EC2/simple/terraform.tfstate.backup
 terraform/EC2/instance+eip/terraform.tfstate.backup
 terraform/EC2/instance+eip/terraform.tfstate
+terraform/EC2/instance+dependson/terraform.tfstate
+terraform/EC2/instance+dependson/terraform.tfstate.backup
+terraform/EC2/instance+dependson/.terraform/plugins/darwin_amd64/lock.json
+terraform/EC2/instance+dependson/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
