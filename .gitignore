@@ -34,3 +34,8 @@ terraform/EC2/map/terraform.tfstate
 terraform/EC2/map/terraform.tfvars
 terraform/EC2/map/.terraform/plugins/darwin_amd64/lock.json
 terraform/EC2/map/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
+terraform/EC2/map/terraform.tfstate.backup
+terraform/EC2/output/terraform.tfstate
+terraform/EC2/output/terraform.tfstate.backup
+terraform/EC2/output/.terraform/plugins/darwin_amd64/lock.json
+terraform/EC2/output/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
