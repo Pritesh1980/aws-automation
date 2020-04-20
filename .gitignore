@@ -25,3 +25,12 @@ terraform/EC2/instance+provisioner/terraform.tfstate
 terraform/EC2/instance+provisioner/terraform.tfstate.backup
 terraform/EC2/instance+provisioner/.terraform/plugins/darwin_amd64/lock.json
 terraform/EC2/instance+provisioner/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
+terraform/EC2/input/terraform.tfstate
+terraform/EC2/input/terraform.tfstate.backup
+terraform/EC2/input/.terraform/plugins/darwin_amd64/lock.json
+terraform/EC2/input/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
+terraform/EC2/map/.terraform.tfstate.lock.info
+terraform/EC2/map/terraform.tfstate
+terraform/EC2/map/terraform.tfvars
+terraform/EC2/map/.terraform/plugins/darwin_amd64/lock.json
+terraform/EC2/map/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
