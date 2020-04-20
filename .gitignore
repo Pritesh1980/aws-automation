@@ -13,3 +13,15 @@ terraform/EC2/instance+dependson/terraform.tfstate
 terraform/EC2/instance+dependson/terraform.tfstate.backup
 terraform/EC2/instance+dependson/.terraform/plugins/darwin_amd64/lock.json
 terraform/EC2/instance+dependson/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
+terraform/EC2/inst+provisioner-remote/terraform
+terraform/EC2/inst+provisioner-remote/terraform.pem
+terraform/EC2/inst+provisioner-remote/terraform.pub
+terraform/EC2/inst+provisioner-remote/terraform.tfstate
+terraform/EC2/inst+provisioner-remote/terraform.tfstate.backup
+terraform/EC2/inst+provisioner-remote/.terraform/plugins/darwin_amd64/lock.json
+terraform/EC2/inst+provisioner-remote/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
+terraform/EC2/instance+provisioner/ip_address.txt
+terraform/EC2/instance+provisioner/terraform.tfstate
+terraform/EC2/instance+provisioner/terraform.tfstate.backup
+terraform/EC2/instance+provisioner/.terraform/plugins/darwin_amd64/lock.json
+terraform/EC2/instance+provisioner/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
