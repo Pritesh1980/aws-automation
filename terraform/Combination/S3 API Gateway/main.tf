@@ -50,9 +50,34 @@ resource "aws_iam_role_policy_attachment" "s3_policy_attach" {
   policy_arn = aws_iam_policy.s3_policy.arn
 }
 
+## API Key and dependant pieces
+resource "aws_api_gateway_usage_plan" "myusageplan" {
+  name = "tf_usage_plan"
+
+  api_stages {
+    api_id = aws_api_gateway_rest_api.pm535-tf-api.id
+    stage  = aws_api_gateway_deployment.S3APIDeployment.stage_name
+  }
+}
+
+resource "aws_api_gateway_api_key" "mykey" {
+  name = "tf_api_key"
+}
+
+resource "aws_api_gateway_usage_plan_key" "main" {
+  key_id        = aws_api_gateway_api_key.mykey.id
+  key_type      = "API_KEY"
+  usage_plan_id = aws_api_gateway_usage_plan.myusageplan.id
+}
+# /API Key section
+
 resource "aws_api_gateway_rest_api" "pm535-tf-api" {
   name        = "pm535-tf-api"
   description = "API for S3 Integration"
+
+    endpoint_configuration {
+        types = ["REGIONAL"]
+    }
 }
 
 resource "aws_api_gateway_resource" "Folder" {
@@ -71,7 +96,8 @@ resource "aws_api_gateway_method" "GetBuckets" {
   rest_api_id   = aws_api_gateway_rest_api.pm535-tf-api.id
   resource_id   = aws_api_gateway_rest_api.pm535-tf-api.root_resource_id
   http_method   = "GET"
-  authorization = "AWS_IAM"
+  authorization = "NONE"
+  api_key_required = true
 }
 
 resource "aws_api_gateway_integration" "S3Integration" {

@@ -120,3 +120,8 @@ terraform/EC2/multipleEc2/.terraform.tfstate.lock.info
 terraform/EC2/multipleEc2/terraform.tfstate
 terraform/EC2/multipleEc2/.terraform/plugins/darwin_amd64/lock.json
 terraform/EC2/multipleEc2/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
+terraform/Combination/S3 API Gateway/terraform.tfstate
+terraform/Combination/S3 API Gateway/terraform.tfstate.backup
+terraform/Combination/S3 API Gateway/.terraform/plugins/darwin_amd64/lock.json
+terraform/Combination/S3 API Gateway/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
+terraform/EC2/multipleEc2/terraform.tfstate.backup
