@@ -126,3 +126,8 @@ terraform/Combination/S3 API Gateway/.terraform/plugins/darwin_amd64/lock.json
 terraform/Combination/S3 API Gateway/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
 terraform/EC2/multipleEc2/terraform.tfstate.backup
 terraform/Combination/.DS_Store
+terraform/Combination/Nginx_ELB/.terraform.tfstate.lock.info
+terraform/Combination/Nginx_ELB/terraform.tfstate
+terraform/Combination/Nginx_ELB/terraform.tfstate.backup
+terraform/Combination/Nginx_ELB/.terraform/plugins/darwin_amd64/lock.json
+terraform/Combination/Nginx_ELB/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
