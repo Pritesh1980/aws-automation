@@ -131,3 +131,8 @@ terraform/Combination/Nginx_ELB/terraform.tfstate
 terraform/Combination/Nginx_ELB/terraform.tfstate.backup
 terraform/Combination/Nginx_ELB/.terraform/plugins/darwin_amd64/lock.json
 terraform/Combination/Nginx_ELB/.terraform/plugins/darwin_amd64/terraform-provider-aws_v2.58.0_x4
+.DS_Store
+terraform/VPC/public_private_with_ngw/terraform.tfstate
+terraform/VPC/public_private_with_ngw/terraform.tfstate.backup
+terraform/VPC/public_private_with_ngw/.terraform/plugins/registry.terraform.io/hashicorp/aws/3.3.0/darwin_amd64/terraform-provider-aws_v3.3.0_x5
+terraform/VPC/public_private_with_ngw/.terraform/plugins/selections.json
