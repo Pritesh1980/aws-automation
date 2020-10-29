@@ -1,6 +1,6 @@
 provider "aws" {
-  profile    = "work-user"
-  region = var.region
+  profile = "work-user"
+  region  = var.region
 }
 
 
@@ -54,19 +54,19 @@ resource "aws_iam_instance_profile" "ssm_profile" {
 }
 
 resource "aws_instance" "node" {
-  ami = var.amis[var.region]
-  instance_type = "t2.nano"
-  security_groups = ["allow_http"]
+  ami                  = var.amis[var.region]
+  instance_type        = var.inst-type 
+  security_groups      = ["allow_http"]
   iam_instance_profile = "${aws_iam_instance_profile.ssm_profile.name}"
 
-	user_data = "${file("../user_data/install_db_and_web.sh")}"
-	tags = {
-		Name = "Wordpress - DB + Apache"	
-	}
+  user_data = "${file("../user_data/install_db_and_web.sh")}"
+  tags = {
+    Name = "Wordpress - DB + Apache"
+  }
 }
 
 resource "aws_eip" "ip" {
-    vpc = true
-    instance = aws_instance.node.id
+  vpc      = true
+  instance = aws_instance.node.id
 }
-	
+

@@ -28,13 +28,13 @@ chown -R apache:apache /var/www/html/blog
 
 ## Manual steps
 # sudo mysql_secure_installation
-# sudo mysqladmin -uroot -p create blog
 # sudo mysql -uroot -p
+#   create database blog; 
 #   GRANT ALL ON blog.* to 'root'@'%' IDENTIFIED BY 'ENTER_PASSWORD_HERE' WITH GRANT OPTION;
-# vi /var/www/html/blog/wp-config.php
+# sudo vi /var/www/html/blog/wp-config.php
 #   Modify the database connection parameters as follows:
 #   define(‘DB_NAME’, ‘blog’);
 #   define(‘DB_USER’, ‘root’);
 #   define(‘DB_PASSWORD’, ‘YOUR_PASSWORD’);
 #   define(‘DB_HOST’, ‘localhost’);
-# service httpd restart
+# sudo service httpd restart

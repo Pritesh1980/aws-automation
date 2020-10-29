@@ -8,6 +8,7 @@ Some simple scripts to learn Terraform with.
 - terraform show
 - terraform destroy
 
-Override region for your purposes with:
+Override region for your purposes with eg:
 
 - terraform apply -var region=eu-west-3
+- terraform apply -var region=eu-west-1 -var inst-type=t4g.micro -var-file=arm.tfvars

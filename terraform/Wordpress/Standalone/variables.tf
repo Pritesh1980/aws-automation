@@ -10,3 +10,7 @@ variable "amis" {
 variable "region" {
   default = "eu-west-1"
 }
+
+variable "inst-type" {
+  default = "t2.micro"
+}
