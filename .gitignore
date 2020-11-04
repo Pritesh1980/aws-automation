@@ -3,8 +3,6 @@ terraform/EC2/inst+provisioner-remote/terraform
 terraform/EC2/inst+provisioner-remote/terraform.pem
 terraform/EC2/inst+provisioner-remote/terraform.pub
 terraform/EC2/instance+provisioner/ip_address.txt
-
-
 .DS_Store
 terraform.tfstate.backup
 lock.json
