@@ -1,9 +1,9 @@
 AWSTemplateFormatVersion: 2010-09-09
-Description: ApiGateway to read/write data from S3 
+Description: ApiGateway to read/write data from S3
 
 Parameters:
   S3BucketName:
-    Description: Name of bucket to store files in 
+    Description: Name of bucket to store files in
     Type: String
   ApiName:
     Type: String
@@ -11,9 +11,9 @@ Parameters:
 
 Resources:
   DestS3Bucket:
-    Type: AWS::S3::Bucket 
+    Type: AWS::S3::Bucket
     Properties:
-      BucketName: !Ref S3BucketName 
+      BucketName: !Ref S3BucketName
       BucketEncryption:
         ServerSideEncryptionConfiguration:
           - ServerSideEncryptionByDefault:
@@ -21,7 +21,7 @@ Resources:
       LoggingConfiguration:
         DestinationBucketName: !Ref 'LoggingBucket'
         LogFilePrefix: s3-logs
-  
+
   LoggingBucket:
     Type: AWS::S3::Bucket
     Properties:
@@ -34,17 +34,17 @@ Resources:
   S3IamRole:
     Type: "AWS::IAM::Role"
     Properties:
-      ManagedPolicyArns: 
+      ManagedPolicyArns:
         - "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-      AssumeRolePolicyDocument: 
+      AssumeRolePolicyDocument:
         Version: "2012-10-17"
-        Statement: 
-          - 
+        Statement:
+          -
             Effect: "Allow"
-            Principal: 
-              Service: 
+            Principal:
+              Service:
                 - "apigateway.amazonaws.com"
-            Action: 
+            Action:
               - "sts:AssumeRole"
       Path: "/"
 
@@ -56,14 +56,13 @@ Resources:
         Types:
           - REGIONAL
       ApiKeySourceType: HEADER
-      FailOnWarnings: True 
+      FailOnWarnings: True
       Body :
-        
+
         swagger: "2.0"
         info:
           version: "2020-04-14T14:29:46Z"
           title: "S3-Gateway"
-        #host: "ln9l9pfdzl.execute-api.eu-west-1.amazonaws.com"
         basePath: "/Dev"
         schemes:
         - "https"
@@ -91,7 +90,7 @@ Resources:
               security:
               - api_key: []
               x-amazon-apigateway-integration:
-                credentials: 
+                credentials:
                   !GetAtt
                     - S3IamRole
                     - Arn
@@ -131,10 +130,10 @@ Resources:
               security:
               - api_key: []
               x-amazon-apigateway-integration:
-                credentials: 
+                credentials:
                   !GetAtt
                     - S3IamRole
-                    - Arn                
+                    - Arn
                 uri: "arn:aws:apigateway:eu-west-1:s3:path/{bucket}"
                 responses:
                   default:
@@ -166,10 +165,10 @@ Resources:
               security:
               - api_key: []
               x-amazon-apigateway-integration:
-                credentials: 
+                credentials:
                   !GetAtt
                     - S3IamRole
-                    - Arn               
+                    - Arn
                 uri: "arn:aws:apigateway:eu-west-1:s3:path/{bucket}"
                 responses:
                   default:
@@ -206,10 +205,10 @@ Resources:
               security:
               - api_key: []
               x-amazon-apigateway-integration:
-                credentials: 
+                credentials:
                   !GetAtt
                     - S3IamRole
-                    - Arn                
+                    - Arn
                 uri: "arn:aws:apigateway:eu-west-1:s3:path/{bucket}/{object}"
                 responses:
                   default:
@@ -247,7 +246,7 @@ Resources:
               security:
               - api_key: []
               x-amazon-apigateway-integration:
-                credentials: 
+                credentials:
                   !GetAtt
                     - S3IamRole
                     - Arn
@@ -277,7 +276,7 @@ Resources:
           Empty:
             type: "object"
             title: "Empty Schema"
- 
+
 
   Deployment:
     Type: 'AWS::ApiGateway::Deployment'
@@ -301,9 +300,9 @@ Resources:
   ApiUsagePlan:
     Type: "AWS::ApiGateway::UsagePlan"
     Properties:
-      ApiStages: 
+      ApiStages:
       - ApiId: !Ref MyRestApi
-        Stage: Dev  
+        Stage: Dev
       Description: !Join [" ", [{"Ref": "AWS::StackName"}, "usage plan"]]
       Quota:
         Limit: 2000
@@ -325,15 +324,15 @@ Resources:
 Outputs:
   S3Bucket:
     Description: The target S3 bucket
-    Value: !Ref DestS3Bucket 
+    Value: !Ref DestS3Bucket
   LoggingBucket:
     Description: The S3 logging bucket
     Value: !Ref LoggingBucket
   RoleArn:
-    Description: The IAM role created for API Gateway to have full access to S3 
+    Description: The IAM role created for API Gateway to have full access to S3
     Value: !GetAtt
       - S3IamRole
       - Arn
   ApiID:
-    Description: API ID 
+    Description: API ID
     Value: !Ref MyRestApi
