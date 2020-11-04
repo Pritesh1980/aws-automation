@@ -22,3 +22,11 @@ output "subnet_c_public_cidr" {
 output "subnet_c_private_cidr" {
   value = aws_subnet.private_c.cidr_block
 }
+
+output "subnet_a_public_id" {
+  value = aws_subnet.public_a.id
+}
+
+output "subnet_a_private_id" {
+  value = aws_subnet.private_a.id
+}
