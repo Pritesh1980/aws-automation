@@ -16,27 +16,21 @@ amazon-linux-extras disable lamp-mariadb10.2-php7.2
 amazon-linux-extras enable php7.4
 yum install -y php-cli php-pdo php-fpm php-json php-mysqlnd php-gd php-dom php-mbstring polkit ImageMagick
 
-yum install -y mariadb-server
-systemctl enable mariadb
-systemctl start mariadb
+
 cd /var/www/html
 wget http://wordpress.org/latest.tar.gz
 tar -xzvf latest.tar.gz
-rm -f latest.tar.gz 
+rm -f latest.tar.gz
 mv wordpress blog
 cd blog
 mv wp-config-sample.php wp-config.php
 chown -R apache:apache /var/www/html/blog
 
 ## Manual steps
-# sudo mysql_secure_installation
-# sudo mysql -uroot -p
-#   create database blog; 
-#   GRANT ALL ON blog.* to 'root'@'%' IDENTIFIED BY 'ENTER_PASSWORD_HERE' WITH GRANT OPTION;
 # sudo vi /var/www/html/blog/wp-config.php
 #   Modify the database connection parameters as follows:
 #   define(‘DB_NAME’, ‘blog’);
 #   define(‘DB_USER’, ‘root’);
 #   define(‘DB_PASSWORD’, ‘YOUR_PASSWORD’);
-#   define(‘DB_HOST’, ‘localhost’);
+#   define(‘DB_HOST’, IP_OF_DB);
 # sudo service httpd restart
