@@ -5,7 +5,7 @@ provider "aws" {
 
 
 module "deploy_vpc" {
-  source = "../../VPC/public_private_with_ngw"
+  source = "../../../VPC/public_private_with_ngw"
 
   region = var.region
 }
@@ -90,7 +90,7 @@ resource "aws_instance" "web" {
   associate_public_ip_address = true
   subnet_id                   = module.deploy_vpc.subnet_a_public_id
 
-  user_data = "${file("../user_data/install_web.sh")}"
+  user_data = "${file("../../user_data/install_web.sh")}"
   tags = {
     Name = "Wordpress - Apache"
   }
@@ -104,7 +104,7 @@ resource "aws_instance" "db" {
   associate_public_ip_address = false
   subnet_id                   = module.deploy_vpc.subnet_a_private_id
 
-  user_data = "${file("../user_data/install_db.sh")}"
+  user_data = "${file("../../user_data/install_db.sh")}"
   tags = {
     Name = "Wordpress - Mariadb"
   }
