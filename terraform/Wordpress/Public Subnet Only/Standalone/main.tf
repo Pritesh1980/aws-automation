@@ -59,7 +59,7 @@ resource "aws_instance" "node" {
   security_groups      = ["allow_http"]
   iam_instance_profile = "${aws_iam_instance_profile.ssm_profile.name}"
 
-  user_data = "${file("../user_data/install_db_and_web.sh")}"
+  user_data = "${file("../../user_data/install_db_and_web.sh")}"
   tags = {
     Name = "Wordpress - DB + Apache"
   }
