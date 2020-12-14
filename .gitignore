@@ -8,4 +8,5 @@ terraform.tfstate.backup
 lock.json
 terraform.tfstate
 .terraform/
-.terraform.tfstate.lock.info
+.terraform.*
+.gitignore.swp

@@ -49,7 +49,7 @@ resource "aws_iam_role_policy_attachment" "ssm-attach" {
 }
 
 resource "aws_iam_instance_profile" "ssm_profile" {
-  name = "ssm_profile"
+  #name = "ssm_profile"
   role = "${aws_iam_role.ec2_ssm_role.name}"
 }
 
