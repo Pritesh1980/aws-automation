@@ -25,7 +25,7 @@ chkconfig httpd on
 amazon-linux-extras disable php7.2
 amazon-linux-extras disable lamp-mariadb10.2-php7.2
 amazon-linux-extras enable php7.4
-yum install -y php-cli php-pdo php-fpm php-json php-mysqlnd php-gd php-dom php-mbstring polkit ImageMagick
+yum install -y php-cli php-pdo php-fpm php-json php-mysqlnd php-gd php-dom php-mbstring polkit ImageMagick ImageMagick-devel ImageMagick-c++-devel
 
 
 cd /var/www/html
