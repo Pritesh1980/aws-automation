@@ -77,6 +77,15 @@ resource "aws_iam_role_policy_attachment" "ssm-attach" {
   policy_arn = aws_iam_policy.ssm_policy.arn
 }
 
+data "aws_iam_policy" "AWSForWordPressPluginPolicy" {
+  arn = "arn:aws:iam::aws:policy/AWSForWordPressPluginPolicy"
+}
+
+resource "aws_iam_role_policy_attachment" "wordpress-attach" {
+  role       = aws_iam_role.ec2_ssm_role.name
+  policy_arn = data.aws_iam_policy.AWSForWordPressPluginPolicy.arn
+}
+
 resource "aws_iam_instance_profile" "ssm_profile" {
   #name = "ec2-ssm-profile"
   role = aws_iam_role.ec2_ssm_role.name
