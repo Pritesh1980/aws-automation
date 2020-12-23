@@ -91,6 +91,18 @@ resource "aws_iam_instance_profile" "ssm_profile" {
   role = aws_iam_role.ec2_ssm_role.name
 }
 
+
+# resource "aws_ebs_volume" "ebs_www" {
+#   availability_zone = "eu-west-1a"
+#   encrypted         = true
+#   size              = 6
+#   type              = "gp3"
+
+#   tags = {
+#     Name = "Wordpress - Apache"
+#   }
+# }
+
 resource "aws_instance" "web" {
   ami                         = var.amis[var.region]
   instance_type               = var.web-inst-type
@@ -100,10 +112,30 @@ resource "aws_instance" "web" {
   subnet_id                   = module.deploy_vpc.subnet_a_public_id
 
   user_data = file("../../user_data/install_web.sh")
+  
+  root_block_device {
+    volume_type = "gp3"
+    volume_size = 8
+    encrypted = true
+  }
+
+
   tags = {
     Name = "Wordpress - Apache"
   }
+
+    volume_tags = {
+    Name = "Wordpress - Apache"
+  }
 }
+
+
+# resource "aws_volume_attachment" "ebs_att" {
+#   device_name = "/dev/sdh"
+#   volume_id   = aws_ebs_volume.ebs_www.id
+#   instance_id = aws_instance.web.id
+# }
+
 
 resource "aws_instance" "db" {
   ami                         = var.amis[var.region]
