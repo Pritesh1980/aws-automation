@@ -18,3 +18,7 @@ variable "web-inst-type" {
 variable "db-inst-type" {
   default = "t2.micro"
 }
+
+variable "aws_profile" {
+  default = "work-user"
+}
