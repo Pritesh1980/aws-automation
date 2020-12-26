@@ -59,6 +59,16 @@ resource "aws_instance" "node" {
   security_groups      = ["allow_http"]
   iam_instance_profile = "${aws_iam_instance_profile.ssm_profile.name}"
 
+  root_block_device {
+    volume_type = "gp3"
+    volume_size = 8
+    encrypted = true
+  }
+
+  volume_tags = {
+    Name = "Wordpress"
+  }
+
   user_data = "${file("../../user_data/install_db_and_web.sh")}"
   tags = {
     Name = "Wordpress - DB + Apache"

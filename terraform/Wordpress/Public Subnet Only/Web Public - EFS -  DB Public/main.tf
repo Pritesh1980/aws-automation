@@ -129,6 +129,16 @@ resource "aws_instance" "web" {
   associate_public_ip_address = true
   subnet_id                   = module.deploy_vpc.subnet_a_public_id
 
+  root_block_device {
+    volume_type = "gp3"
+    volume_size = 8
+    encrypted = true
+  }
+
+  volume_tags = {
+    Name = "Wordpress - Apache"
+  }
+
   user_data = data.template_file.script.rendered
   tags = {
     Name = "Wordpress - Apache (EFS)"
@@ -142,6 +152,16 @@ resource "aws_instance" "db" {
   iam_instance_profile        = aws_iam_instance_profile.ssm_profile.name
   associate_public_ip_address = true
   subnet_id                   = module.deploy_vpc.subnet_a_public_id
+
+  root_block_device {
+    volume_type = "gp3"
+    volume_size = 8
+    encrypted = true
+  }
+
+  volume_tags = {
+    Name = "Wordpress - Mariadb"
+  }
 
   user_data = file("../../user_data/install_db.sh")
   tags = {
