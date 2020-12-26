@@ -106,7 +106,7 @@ resource "aws_efs_file_system" "www" {
   creation_token = "web-server"
   performance_mode = "generalPurpose"
   throughput_mode = "bursting"
-  encrypted = "false"
+  encrypted = "true"
   
   tags = {
     Name = "WWW EFS"

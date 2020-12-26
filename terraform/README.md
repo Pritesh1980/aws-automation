@@ -10,7 +10,7 @@ Some simple scripts to learn Terraform with.
 
 # Hints
 
-Ensure you have a valid AWS config in ~/.aws/crdentials. My examples use a profile called 'work-user'.
+Ensure you have a valid AWS config in ~/.aws/crdentials. My examples use a profile called 'work-user', modify the aws_profile variable to override it.
 
 Override region for your purposes with eg:
 - terraform apply -var region=eu-west-3

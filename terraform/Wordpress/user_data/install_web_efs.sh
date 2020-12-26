@@ -37,6 +37,8 @@ cd blog
 mv wp-config-sample.php wp-config.php
 chown -R apache:apache /var/www/html/blog
 
+yum install -y htop
+
 ## Manual steps
 # sudo vi /var/www/html/blog/wp-config.php
 #   Modify the database connection parameters as follows:
