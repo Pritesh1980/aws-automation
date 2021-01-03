@@ -8,6 +8,7 @@ module "deploy_vpc" {
   source = "../../../VPC/public_with_igw"
 
   region = var.region
+  aws_profile = var.aws_profile
 }
 
 resource "aws_security_group" "allow_http" {
