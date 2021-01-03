@@ -16,4 +16,5 @@ Override region for your purposes with eg:
 - terraform apply -var region=eu-west-3
 - terraform apply -var region=eu-west-1 -var inst-type=t4g.micro -var-file=arm.tfvars 
 - terraform apply -var region=eu-west-1 -var db-inst-type=t4g.micro -var web-inst-type=t4g.micro -var-file=arm.tfvars
-- terraform apply -var region=eu-west-1 -var db-inst-type=t4g.nano -var web-inst-type=t4g.nano -var-file=arm.tfvars
+- terraform apply -var region=eu-west-1 -var db-inst-type=t4g.nano -var web-inst-type=t4g.micro -var-file=arm.tfvars
+- terraform plan -var aws_profile=another_profile 
