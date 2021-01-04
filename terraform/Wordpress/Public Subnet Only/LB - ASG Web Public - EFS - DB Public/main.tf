@@ -252,12 +252,6 @@ resource "aws_lb_target_group" "web_target_group" {
   target_type = "instance"
 }
 
-# resource "aws_alb_target_group_attachment" "web_attach" {
-#   target_group_arn = aws_lb_target_group.web_target_group.arn
-#   target_id        = aws_instance.web.id
-#   port             = 80
-# }
-
 resource "aws_lb_listener" "web" {
   load_balancer_arn = aws_lb.lb.arn
   port              = "80"
