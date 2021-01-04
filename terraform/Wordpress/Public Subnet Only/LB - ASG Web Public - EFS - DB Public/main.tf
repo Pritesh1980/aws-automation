@@ -191,7 +191,7 @@ resource "aws_launch_template" "web" {
 
 resource "aws_autoscaling_group" "web_asg" {
   name_prefix         = "web_asg_"
-  desired_capacity    = 1
+  desired_capacity    = 2
   max_size            = 2
   min_size            = 1
   health_check_type   = "EC2"
