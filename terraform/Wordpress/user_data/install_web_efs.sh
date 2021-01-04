@@ -26,18 +26,24 @@ amazon-linux-extras disable php7.2
 amazon-linux-extras disable lamp-mariadb10.2-php7.2
 amazon-linux-extras enable php7.4
 yum install -y php-cli php-pdo php-fpm php-json php-mysqlnd php-gd php-dom php-mbstring php-opcache polkit ImageMagick ImageMagick-devel ImageMagick-c++-devel
-
-
-cd /var/www/html
-wget http://wordpress.org/latest.tar.gz
-tar -xzvf latest.tar.gz
-rm -f latest.tar.gz
-mv wordpress blog
-cd blog
-mv wp-config-sample.php wp-config.php
-chown -R apache:apache /var/www/html/blog
-
 yum install -y htop
+
+if [[ ! -d /var/www/html/blog ]]; then
+    echo "web dir does not exist"
+    cd /var/www/html
+    wget http://wordpress.org/latest.tar.gz
+    tar -xzvf latest.tar.gz
+    rm -f latest.tar.gz
+    mv wordpress blog
+    cd blog
+    mv wp-config-sample.php wp-config.php
+    chown -R apache:apache /var/www/html/blog
+else
+    chown -R apache:apache /var/www/html/blog
+    service httpd start
+fi
+
+
 
 ## Manual steps
 # sudo vi /var/www/html/blog/wp-config.php
