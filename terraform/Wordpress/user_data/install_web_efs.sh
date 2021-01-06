@@ -27,6 +27,7 @@ amazon-linux-extras disable lamp-mariadb10.2-php7.2
 amazon-linux-extras enable php7.4
 yum install -y php-cli php-pdo php-fpm php-json php-mysqlnd php-gd php-dom php-mbstring php-opcache polkit ImageMagick ImageMagick-devel ImageMagick-c++-devel
 yum install -y htop
+service httpd start
 
 if [[ ! -d /var/www/html/blog ]]; then
     echo "web dir does not exist"
@@ -40,7 +41,6 @@ if [[ ! -d /var/www/html/blog ]]; then
     chown -R apache:apache /var/www/html/blog
 else
     chown -R apache:apache /var/www/html/blog
-    service httpd start
 fi
 
 

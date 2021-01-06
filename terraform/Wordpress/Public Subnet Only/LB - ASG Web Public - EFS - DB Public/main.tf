@@ -194,7 +194,7 @@ resource "aws_autoscaling_group" "web_asg" {
   desired_capacity    = 2
   max_size            = 2
   min_size            = 1
-  health_check_type   = "EC2"
+  health_check_type   = "ELB"
   target_group_arns   = [aws_lb_target_group.web_target_group.arn]
   vpc_zone_identifier = [module.deploy_vpc.subnet_a_public_id]
 
