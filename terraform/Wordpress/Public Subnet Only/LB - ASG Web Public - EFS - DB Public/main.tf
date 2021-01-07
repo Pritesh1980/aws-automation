@@ -230,7 +230,7 @@ resource "aws_instance" "db" {
 }
 
 resource "aws_lb" "lb" {
-  name               = "Web-LB"
+  name               = "web-lb"
   internal           = false
   load_balancer_type = "application"
   security_groups    = [aws_security_group.lb.id]
